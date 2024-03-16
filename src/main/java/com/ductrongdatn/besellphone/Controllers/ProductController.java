@@ -1,4 +1,4 @@
-package com.ductrongdatn.besellphone.Controller;
+package com.ductrongdatn.besellphone.Controllers;
 
 import com.ductrongdatn.besellphone.DTO.ProductDTO;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/v1/products")
+@RequestMapping("${api.prefix}/products")
 public class ProductController {
 
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
