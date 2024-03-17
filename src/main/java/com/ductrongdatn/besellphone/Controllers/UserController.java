@@ -2,7 +2,9 @@ package com.ductrongdatn.besellphone.Controllers;
 
 import com.ductrongdatn.besellphone.DTO.UserDTO;
 import com.ductrongdatn.besellphone.DTO.UserLoginDTO;
+import com.ductrongdatn.besellphone.Services.IUserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -15,7 +17,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${api.prefix}/users")
+@RequiredArgsConstructor
 public class UserController {
+    private final IUserService userService;
     @PostMapping("/register")
     public ResponseEntity<?> createUser(
             @Valid @RequestBody UserDTO userDTO,
@@ -32,6 +36,7 @@ public class UserController {
             if(!userDTO.getPassword().equals(userDTO.getRetypePassword())){
                 return ResponseEntity.badRequest().body("Password does not match");
             }
+            userService.createUser(userDTO);
             return ResponseEntity.ok("Register successfully");
         }  catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -41,7 +46,8 @@ public class UserController {
     public ResponseEntity<String> login(
             @Valid @RequestBody UserLoginDTO userLoginDTO) {
         // Kiểm tra thông tin đăng nhập và sinh token
+        String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
         // Trả về token trong response
-        return ResponseEntity.ok("some token");
+        return ResponseEntity.ok(token);
     }
 }
