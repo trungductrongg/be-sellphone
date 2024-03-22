@@ -34,4 +34,5 @@ public class OrderDetail {
 
     @Column(name = "color")
     private String color;
+
 }
