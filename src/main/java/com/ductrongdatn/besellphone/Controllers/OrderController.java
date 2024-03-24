@@ -19,9 +19,7 @@ import java.util.List;
 public class OrderController {
     private final IOrderService orderService;
     @PostMapping("")
-    public ResponseEntity<?> createOrder(
-            @Valid @RequestBody OrderDTO orderDTO,
-            BindingResult result
+    public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDTO orderDTO, BindingResult result
     ) {
         try {
             if(result.hasErrors()) {
