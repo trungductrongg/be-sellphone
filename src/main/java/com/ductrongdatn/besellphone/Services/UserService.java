@@ -71,7 +71,8 @@ public class UserService implements IUserService{
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
                     phoneNumber,
-                    password
+                    password,
+                        existingUser.getAuthorities()
         );
         authenticationManager.authenticate(authenticationToken);
         return jwtTokenUtil.generateToken(existingUser);

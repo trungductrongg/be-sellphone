@@ -22,4 +22,4 @@ api:
   prefix: api/v1
 jwt:
   expiration: 2592000 #30days
-  secretKey: Trong td
+  secretKey: TaqlmGv1iEDMRiFp/pHuID1+T84IABfuA0xXh4GhiUI=
