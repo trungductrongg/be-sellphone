@@ -3,6 +3,7 @@ package com.ductrongdatn.besellphone.Services;
 import com.ductrongdatn.besellphone.Components.JwtTokenUtil;
 import com.ductrongdatn.besellphone.DTO.UserDTO;
 import com.ductrongdatn.besellphone.Exceptions.DataNotFoundException;
+import com.ductrongdatn.besellphone.Exceptions.PermissionDenyException;
 import com.ductrongdatn.besellphone.Models.Role;
 import com.ductrongdatn.besellphone.Models.User;
 import com.ductrongdatn.besellphone.Repositories.RoleRepository;
@@ -26,10 +27,16 @@ public class UserService implements IUserService{
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
     @Override
-    public User createUser(UserDTO userDTO) throws DataNotFoundException {
+    public User createUser(UserDTO userDTO) throws Exception {
         String phoneNumber = userDTO.getPhoneNumber();
         if(userRepository.existsByPhoneNumber(phoneNumber)) {
             throw new DataIntegrityViolationException("Phone number already exists");
+        }
+        Role role = roleRepository.findById(userDTO.getRoleId())
+                .orElseThrow(() -> new DataNotFoundException("Role not found"));
+
+        if(role.getName().toUpperCase().equals(Role.ADMIN)){
+            throw new PermissionDenyException("You cannot register an admin account");
         }
 
         User newUser = User.builder()
@@ -41,8 +48,7 @@ public class UserService implements IUserService{
                 .facebookAccountId(userDTO.getFacebookAccountId())
                 .googleAccountId(userDTO.getGoogleAccountId())
                 .build();
-        Role role = roleRepository.findById(userDTO.getRoleId())
-                .orElseThrow(() -> new DataNotFoundException("Role not found"));
+
         newUser.setRole(role);
 
         if (userDTO.getFacebookAccountId() == 0 && userDTO.getGoogleAccountId() == 0) {

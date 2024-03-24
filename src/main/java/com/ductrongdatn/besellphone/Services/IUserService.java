@@ -5,6 +5,6 @@ import com.ductrongdatn.besellphone.Exceptions.DataNotFoundException;
 import com.ductrongdatn.besellphone.Models.User;
 
 public interface IUserService {
-    User createUser(UserDTO userDTO) throws DataNotFoundException;
+    User createUser(UserDTO userDTO) throws Exception;
     String login(String phoneNumber, String password) throws Exception;
 }
