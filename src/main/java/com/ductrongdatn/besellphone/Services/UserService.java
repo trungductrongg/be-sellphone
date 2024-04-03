@@ -1,6 +1,6 @@
 package com.ductrongdatn.besellphone.Services;
 
-import com.ductrongdatn.besellphone.Components.JwtTokenUtil;
+import com.ductrongdatn.besellphone.Components.JwtTokenUtils;
 import com.ductrongdatn.besellphone.DTO.UserDTO;
 import com.ductrongdatn.besellphone.Exceptions.DataNotFoundException;
 import com.ductrongdatn.besellphone.Exceptions.PermissionDenyException;
@@ -24,7 +24,7 @@ public class UserService implements IUserService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtils jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
     @Override
     public User createUser(UserDTO userDTO) throws Exception {
